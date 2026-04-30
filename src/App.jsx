@@ -12,7 +12,7 @@ import Error from "./ui/Error";
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
-    errorElement: <Error/>,
+    errorElement: <Error />,
     children: [
       {
         path: "/",
@@ -45,7 +45,10 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      <RouterProvider router={router}></RouterProvider>
+      <RouterProvider
+        router={router}
+        future={{ v7_startTransition: true }}
+      ></RouterProvider>
     </>
   );
 }
