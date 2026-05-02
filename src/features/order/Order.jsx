@@ -2,7 +2,7 @@
 // Test ID: IIDSAT
 import OrderItem from "./OrderItem";
 import { useFetcher, useLoaderData } from "react-router-dom";
-import { getOrder } from "../../services/apiRestaurant";
+import { getOrder, updateOrder } from "../../services/apiRestaurant";
 
 import {
   calcMinutesLeft,
@@ -10,6 +10,7 @@ import {
   formatDate,
 } from "../../utils/helpers";
 import { useEffect } from "react";
+import UpdateOrder from "./UpdateOrder";
 
 function Order() {
   const order = useLoaderData();
@@ -89,6 +90,7 @@ function Order() {
           To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}
         </p>
       </div>
+      {!priority && <UpdateOrder />}
     </div>
   );
 }
@@ -96,6 +98,11 @@ function Order() {
 export async function loader({ params }) {
   const order = await getOrder(params.orderId);
   return order;
+}
+
+export async function action({ params }) {
+  await updateOrder(params.orderId, { priority: true });
+  return null;
 }
 
 export default Order;
